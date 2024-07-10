@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %} Home {% endblock %}
+
+
+{% block contend %}
+<h1>Reviews</h1>
+
+<div class="container posts-content row">
+    <div class="col">
+        {% for review in reviews %}
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="media mb-3">
+                            <img src="{{review.user.user_photo.url}}" class="d-block ui-w-40 rounded-circle" alt="">
+                            <div class="media-body ml-3">
+                                <b>{{review.user.username}}</b> rate is {{review.stars_given}} stars
+                                <div class="text-muted small">{{review.created_date|date:"M d, Y"}}</div>
+                            </div>
+                        </div>
+                        <p>
+                            {{review.comment|truncatechars:200}}
+                        </p>
+                        <img src="{{review.book.cover_photo.url}}" class="cover1_pic center " alt="book">
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+    <div class="col-6">
+        <div class="row">
+            <h1> Books genres</h1>
+            {%for genre in genres%}
+            <div class="row">
+                <h3>{{genre.name}}</h3>
+                <div class="col">
+                {%for book in genre.book_set.all%}
+            <div class=" d-inline p-2">
+                <a href="{% url 'books:detail' book.id %}">
+                <img class="like " alt="book" src="{{book.cover_photo.url}} "></a>
+            </div>
+                {%endfor%}
+            </div>
+            {%endfor%}
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}
+

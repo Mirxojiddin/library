@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} profile {% endblock %}
+
+
+{% block contend %}
+
+<h1> Profile page</h1>
+<img class="img" src="{{user.user_photo.url}}"> <br>
+<a href="{% url 'accounts:profile_edit' %}"> Edit </a> <br>
+
+{{user.username}}<br>
+{{user.first_name}} <br>
+{{user.last_name}}<br>
+{{user.email}}<br>
+
+
+</div>
+{% endblock %}

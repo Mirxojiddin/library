@@ -1,0 +1,10 @@
+celery
+crispy-bootstrap5
+django-crispy-forms
+gevent
+pillow
+psycopg2
+python-decouple
+redis
+requests
+Django~=4.2
