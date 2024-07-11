@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %} kitoblar {% endblock %}
+
+
+{% block contend %}
+    <h1>Kitoblar</h1>
+    <div class="row">
+        <table class="border-3">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            {% for book in all_books %}
+
+                <tbody>
+                <tr>
+                    <td><a href="{% url 'books:book_detail' book.id %}">{{ book.title }}</a></td>
+                    <td>
+                        <a href="{% url 'books:book_update' book.id %}">Yangilash</a> |
+                        <a href="{% url 'books:book_delete' book.id %}">O'chirish</a>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            {% endfor %}
+    </div>
+    <div class="row">
+
+        <a href="{% url 'books:book_create' %}">Create New Book</a>
+    </div>
+{% endblock %}

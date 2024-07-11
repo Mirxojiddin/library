@@ -1,5 +1,6 @@
 {% load static %}
-
+{% url 'books:book_create' as book_create %}
+{% url 'books:book_list' as books %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,13 +29,13 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-            <a class="nav-link {% if request.path == familiars_page_url %} active {%endif%}"
-               aria-current="page" href="{{familiars_page_url}}">Kitoblar </a>
+            <a class="nav-link {% if request.path == books %} active {%endif%}"
+               aria-current="page" href="{{books}}">Kitoblar </a>
           </li>
 
          {% if request.user.can_add_book%}
           <li class="nav-item ">
-            <a class="nav-link {% if request.path == friends_page_url %} active {%endif%}" href="{{friends_page_url}}">Kitob qo'shish</a>
+            <a class="nav-link {% if request.path == book_create %} active {%endif%}" href="{{book_create}}">Kitob qo'shish</a>
           </li>
             {%endif%}
         </ul>

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %} kitoblar {% endblock %}
+
+
+{% block contend %}
+<h1>Kitobni ochirish</h1>
+    <p>Siz haqiqatdan ham  '{{ book.title }}'ni o'chirmoqchimisiz</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">o'chirish</button>
+        <a href="{% url 'book_list' %}">Cancel</a>
+    </form>
+{% endblock %}

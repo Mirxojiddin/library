@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %} {{ book.title }} {% endblock %}
+
+
+{% block contend %}
+    <h1>{{ book.title }}</h1>
+    <p><strong>Author:</strong> {{ book.author }}</p>
+    <p><strong>Description:</strong> {{ book.description }}</p>
+    <p><a href="{% url 'books:book_update' book.id %}">Update</a></p>
+    <p><a href="{% url 'books:book_delete' book.id %}">Delete</a></p>
+{% endblock %}
+
+

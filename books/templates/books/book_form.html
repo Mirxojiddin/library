@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %} {% if book %}Kitobni yangilash{% else %}kitobni o'chirish{% endif %} {% endblock %}
+
+
+{% block contend %}
+<h1>{% if book %}Kitobni yangilash{% else %}kitobni o'chirish{% endif %}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form|crispy}}
+        <button type="submit">Save</button>
+    </form>
+{% endblock %}
