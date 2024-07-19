@@ -1,14 +1,40 @@
-{% extends "base.html" %}
-{% load crispy_forms_tags %}
-{% block title %} {{ book.title }} {% endblock %}
+{% extends "books/base_book.html" %}
+{% load static %}
+{% load custom_filters %}
 
+{% block books %}
+    <div class="container mt-5">
+        <div class="card">
+            <div class="row no-gutters">
+                <div class="col-md-8">
+                    {% if book.image %}
+                        <img src="{{ book.image.url }}" class="card-img" alt="{{ book.title }}">
+                    {% else %}
+                        <div class="card-img placeholder-img" style="height: 100%; background-color: #eee;"></div>
+                    {% endif %}
+                </div>
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ book.title }}</h2>
+                        <p class="card-text">{{ book.description }}</p>
+                        <p class="card-text"><strong>Author:</strong> {{ book.author }}</p>
+                        <p class="card-text"><strong>Year:</strong> {{ book.year }}</p>
+                        <p class="card-text"><strong>Pages:</strong> {{ book.pages }}</p>
+                        <p class="card-text"><strong>ISBN:</strong> {{ book.isbn }}</p>
+                        <p class="card-text"><strong>Viewed:</strong> {{ book.bookshowed_set.count }}</p>
+                        <p class="card-text"><strong>Downloaded:</strong> {{ book.bookdownloaded_set.count }}</p>
+                        {% if book.url %}
+                            <a href="{{ book.url }}" class="btn btn-primary">Read more</a>
+                        {% endif %}
+                        {% if book.file %}
+                            <a href="{{ book.file.url }}" class="btn btn-secondary">Download</a>
+                        {% endif %}
 
-{% block contend %}
-    <h1>{{ book.title }}</h1>
-    <p><strong>Author:</strong> {{ book.author }}</p>
-    <p><strong>Description:</strong> {{ book.description }}</p>
-    <p><a href="{% url 'books:book_update' book.id %}">Update</a></p>
-    <p><a href="{% url 'books:book_delete' book.id %}">Delete</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="{% url 'books:book_list' %}" class="btn btn-outline-primary mt-3">Back to Book List</a>
+    </div>
+
 {% endblock %}
-
-

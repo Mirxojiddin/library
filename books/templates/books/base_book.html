@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %} kitoblar {% endblock %}
+
+
+{% block contend %}
+    <style>
+        .form-control-dark {
+            background-color: #343a40;
+            color: white;
+            border: 1px solid #ced4da;
+        }
+
+        .form-control-dark::placeholder {
+            color: #6c757d;
+        }
+    </style>
+    <form method="get" class="grid grid-cols-2 lg:grid-cols-4 gap-4 d-flex flex-row">
+        <div class="form-group mx-2">
+            <input type="text" name="title" class="form-control form-control-dark" placeholder="Kitob nomi">
+        </div>
+        <div class="form-group mx-2">
+            <input type="text" name="author" class="form-control form-control-dark" placeholder="Muallif">
+        </div>
+        <div class="form-group mx-2">
+            <input type="text" name="year" class="form-control form-control-dark" placeholder="Yil">
+        </div>
+        <div class="form-group mx-2">
+            <input type="text" name="isbn" class="form-control form-control-dark" placeholder="ISBN">
+        </div>
+        <div class="form-group mx-2">
+            <input type="submit" class="btn btn-primary" value="Search">
+        </div>
+    </form>
+    <div class="container mt-5"><h1 class="text-center">Eng ko'p o'qilgan kitoblar</h1></div>
+ <div class="container mt-5">
+        <div class="row book-sidebar-custom">
+            <div class="col-lg-9 col-12">
+                <div class="blog-sidebar-inner">
+                    <div id="w0" class="row">
+                       {% block books %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="blog-detail-sidebar">
+                    <div class="singles-s-widget service-sidbar-widget service-d-menu shadow-custom">
+                        <h3 class="service-d-sidebar-title">
+                            Elektron kutubxona </h3>
+                        <ul>
+                            {% for category in categories %}
+                            <li>
+                                <a href="{% url 'books:category_book_list' category.id %}">
+                                    <i class="fas fa-circle-notch"></i>
+                                    <h5>{{ category.name }} ({{ category.books.count}} ta)</h5></a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="blog-detail-sidebar">
+                    <div class="singles-s-widget service-sidbar-widget service-d-menu shadow-custom">
+                        <h3 class="service-d-sidebar-title">
+                            Oxirgi yuklanganlar kitoblar </h3>
+                        <ul>
+                            {% for last_book in last_books %}
+                            <li>
+                                <a href="{% url 'books:book_detail' last_book.id %}">
+                                    <i class="fas fa-circle-notch"></i>
+                                    <h5>{{ last_book.title }}</h5></a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
