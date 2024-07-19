@@ -8,3 +8,4 @@ python-decouple
 redis
 requests
 Django~=4.2
+dj-database-url==1.2.0
