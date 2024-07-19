@@ -9,3 +9,4 @@ redis
 requests
 Django~=4.2
 dj-database-url==1.2.0
+gunicorn==19.7.1
