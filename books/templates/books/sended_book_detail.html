@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %} Kitob buyurtma qilish {% endblock %}
+
+
+{% block contend %}
+Yuboruvchi: {{book.user.username}}<br>
+Kitob nomi: {{book.book_name}}<br>
+Tanif: {{book.description}} <br>
+Holati: {%if book.status%} Tahrirlangan {%else%} Tahhirlanmagan {%endif%} <br>
+Muallifi: {{book.description}} <br>
+<a href = ''  class = "btn btn-primary"> qabul qilish</a>
+{% endblock %}
+

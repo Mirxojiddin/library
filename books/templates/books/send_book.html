@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
-{% block title %} {% if book %}Kitobni yangilash{% else %}kitobni qo'shish{% endif %} {% endblock %}
+{% block title %} Kitob Yuborish {% endblock %}
 
 
 {% block contend %}
-<h1>{% if book %}Kitobni yangilash{% else %}kitobni qo'shish{% endif %}</h1>
+<h1>Kitob yuborish</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{form|crispy}}

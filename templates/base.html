@@ -1,89 +1,114 @@
 {% load static %}
 {% url 'books:book_create' as book_create %}
 {% url 'books:book_list' as books %}
+{% url 'books:book_order' as book_order %}
+{% url 'books:book_send' as book_send %}
+{% url 'books:book_ordered' as book_ordered %}
+{% url 'books:book_sended' as book_sended %}
+{% url 'books:book_list' as books %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title%} Asosiy sahifa {% endblock %}</title>
-<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <link rel = 'stylesheet', href="{% static  'css/main.css'%}">
-<!--  <link rel = 'stylesheet', href="{% static  'css/bootstrap.min.css'%}">-->
-<!--  <script src="{% static  'js/bootstrap.min.js'%}">-->
+    <title>{% block title %} Asosiy sahifa {% endblock %}</title>
+    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel='stylesheet'  href="{% static  'css/main.css' %}">
+    <!--  <link rel = 'stylesheet', href="{% static  'css/bootstrap.min.css'%}">-->
+    <!--  <script src="{% static  'js/bootstrap.min.js'%}">-->
 </head>
 <body class="mx-5">
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-primary mb-3">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'index' %}">Kububxona</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-            <a class="nav-link {% if request.path == books %} active {%endif%}"
-               aria-current="page" href="{{books}}">Kitoblar </a>
-          </li>
+<nav class="navbar navbar-expand-lg navbar-light bg-primary mb-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}">Kububxona</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == books %} active {% endif %}"
+                           aria-current="page" href="{{ books }}">Kitoblar </a>
+                    </li>
 
-         {% if request.user.can_add_book%}
-          <li class="nav-item ">
-            <a class="nav-link {% if request.path == book_create %} active {%endif%}" href="{{book_create}}">Kitob qo'shish</a>
-          </li>
-            {%endif%}
-        </ul>
-      </ul>
-      <div class="d-flex">
-        {% if request.user.is_authenticated%}
-          <div class="nav-item my-2 my-lg-0 " >
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link btn btn-info border - 5" href="{% url 'accounts:profile' %}">
-                  {{request.user.username}}
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn btn-danger" href="{% url 'accounts:logout' %}" >
-                  Logout
-                </a>
-              </li>
-              </ul>
-          </div>
-        {%else%}
-            <a class="btn btn-primary" href="{% url 'accounts:login'%}">Login</a>
-          <a class="btn btn-info" href="{% url 'accounts:register' %}">Registration</a>
-        {%endif%}
-
-      </div>
-    </div>
-</nav>
-  <div class="container">
-
-      {% if messages %}
-            <div class="mt-4">
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}" role="alert">
-                        {{ message }}
+                    {% if request.user.can_add_book %}
+                        <li class="nav-item ">
+                            <a class="nav-link {% if request.path == book_create %} active {% endif %}"
+                               href="{{ book_create }}">Kitob qo'shish</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link {% if request.path == book_create %} active {% endif %}"
+                               href="{{ book_ordered }}">Yuborilgan kitoblar</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link {% if request.path == book_create %} active {% endif %}"
+                               href="{{ book_sended }}">Buyurtma qilingan kitoblar</a>
+                        </li>
+                    {% endif %}
+                    {% if request.user.can_order_book %}
+                        <li class="nav-item ">
+                            <a class="nav-link {% if request.path == book_send %} active {% endif %}"
+                               href="{{ book_send }}">Kitob yuborish</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link {% if request.path == book_order %} active {% endif %}"
+                               href="{{ book_order }}">Kitob buyurtma qilish</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </ul>
+            <div class="d-flex">
+                {% if request.user.is_authenticated %}
+                    <div class="nav-item my-2 my-lg-0 ">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-info border - 5" href="{% url 'accounts:profile' %}">
+                                    {{ request.user.username }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-danger" href="{% url 'accounts:logout' %}">
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                {% endfor %}
+                {% else %}
+                    <a class="btn btn-primary" href="{% url 'accounts:login' %}">Login</a>
+                    <a class="btn btn-info" href="{% url 'accounts:register' %}">Registration</a>
+                {% endif %}
+
             </div>
+        </div>
+</nav>
+<div class="container">
+
+    {% if messages %}
+        <div class="mt-4">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
 
     {% endif %}
-  {% block contend %}
+    {% block contend %}
 
-  {% endblock %}
-
-
-  </div>
+    {% endblock %}
 
 
+</div>
 
 
 </body>

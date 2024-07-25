@@ -23,3 +23,5 @@ class CustomUser(AbstractUser):
 	def can_add_book(self):
 		return self.status == 'librarian'
 
+	def can_order_book(self):
+		return self.status == 'student'

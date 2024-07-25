@@ -23,13 +23,21 @@
                         <p class="card-text"><strong>ISBN:</strong> {{ book.isbn }}</p>
                         <p class="card-text"><strong>Viewed:</strong> {{ book.bookshowed_set.count }}</p>
                         <p class="card-text"><strong>Downloaded:</strong> {{ book.bookdownloaded_set.count }}</p>
-                        {% if book.url %}
+                        {% if request.user.can_add_book %} 
+                        <p>
+                            <a href = {% url 'books:book_update' book.id%} class ='btn btn-primary'> tahirilash</a>
+                        </p>
+                        <p>
+                            <a href = {% url 'books:book_delete' book.id%} class ='btn btn-danger'> O'chirish</a>
+                        </p> 
+                        {% endif %}
+                            {% if book.url %}
                             <a href="{{ book.url }}" class="btn btn-primary">Read more</a>
                         {% endif %}
                         {% if book.file %}
                             <a href="{{ book.file.url }}" class="btn btn-secondary">Download</a>
                         {% endif %}
-
+                        
                     </div>
                 </div>
             </div>

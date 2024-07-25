@@ -7,7 +7,7 @@
     <p>Siz haqiqatdan ham  '{{ book.title }}'ni o'chirmoqchimisiz</p>
     <form method="post">
         {% csrf_token %}
-        <button type="submit">o'chirish</button>
-        <a href="{% url 'book_list' %}">Cancel</a>
+        <button type="submit" class = 'btn btn-danger'>o'chirish</button>
+        <a href="{% url 'books:book_list' %}">Cancel</a>
     </form>
 {% endblock %}

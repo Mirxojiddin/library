@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from books.models import Book
-from books.tasks import send_telegram_notification
+
 
 
 @receiver(post_save, sender=Book)

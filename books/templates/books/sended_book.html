@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %} Kitob buyurtma qilish {% endblock %}
+
+
+{% block contend %}
+{% if sends%}
+{% for send in sends%}
+{{send.user.username}} ||
+{{send.book_name}}||
+{{send.description}} || 
+<a href = "{% url 'books:book_sended_detail' send.id%}" class= 'btn btn-primary'> Ko'rish </a>
+{%endfor%}
+{%else%}
+Hozirda yuborilgan kitoblar yo'q
+{%endif%}
+{% endblock %}
+

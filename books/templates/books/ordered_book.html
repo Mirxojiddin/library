@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %} Kitob buyurtma qilish {% endblock %}
+
+
+{% block contend %}
+{% if orders%}
+{% for order in orders%}
+{{order.user.username}} ||
+{{order.book_name}}||
+{{order.description}} || 
+<a href = "{% url 'books:book_ordered_detail' order.id%}" class= 'btn btn-primary'> Ko'rish </a>
+{%endfor%}
+{%else%}
+Hozirda yuborilgan kitoblar yo'q
+{%endif%}
+{% endblock %}
+

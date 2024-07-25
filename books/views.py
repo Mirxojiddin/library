@@ -1,13 +1,13 @@
-import datetime
 from urllib.parse import urlencode
 
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
 from django.http import Http404, FileResponse
-from django.shortcuts import  redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from django.views import View
-from .models import Book, Category, BookDownloaded, BookShowed
-from .forms import BookForm
+from .models import Book, Category, BookDownloaded, BookShowed, OrderBook, SendBook
+from .forms import BookForm, OrderBookForm, SendBookForm
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -126,6 +126,7 @@ class BookDetailView(View):
 
 class BookCreateView(View):
     def get(self, request):
+
         form = BookForm()
         return render(request, 'books/book_form.html', {'form': form})
 
@@ -174,3 +175,59 @@ class DownloadBookView(LoginRequiredMixin, View):
         response['Content-Disposition'] = f'attachment; filename="{book.file.name}"'
 
         return response
+
+
+class OrderBookView(LoginRequiredMixin, View):
+    def get(self, request):
+        form = OrderBookForm()
+        return render(request, 'books/order_book.html', {'form': form})
+
+    def post(self, request):
+        form = OrderBookForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.user = request.user
+            order.save()
+            messages.success(request, 'Sizning habaringiz adminga yuborildi')
+            return redirect('books:book_list')
+        return render(request, 'books/order_book.html', {'form': form})
+    
+
+class SendBookView(LoginRequiredMixin, View):
+    def get(self, request):
+        form = SendBookForm()
+        return render(request, 'books/send_book.html', {'form': form})
+
+    def post(self, request):
+        form = OrderBookForm(request.POST)
+        if form.is_valid():
+            book = form.save(commit=False)
+            book.user = request.user
+            book.save()
+            messages.success(request, 'Sizning habaringiz adminga yuborildi')
+            return redirect('books:book_list')
+        return render(request, 'books/send_book.html', {'form': form})
+    
+
+class OrderedBookView(LoginRequiredMixin, View):
+    def get(self, request):
+        orders = OrderBook.objects.all()
+        return render(request, 'books/ordered_book.html', {'orders':orders})
+
+
+class SendedBookView(LoginRequiredMixin, View):
+    def get(self, request):
+        sends = SendBook.objects.all()
+        return render(request, 'books/sended_book.html', {'sends':sends})
+
+
+class SendedBookDetailView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        book = SendBook.objects.get(pk=pk)
+        return render(request, 'books/sended_book_detail.html', {'book':book})
+    
+
+class OrderedBookDetailView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        book = OrderBook.objects.get(pk=pk)
+        return render(request, 'books/ordered_book_detail.html', {'book':book})
